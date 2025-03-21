@@ -61,5 +61,5 @@ This project aims to test the use of a multi-agent architecture combined with a 
  ├── docker-compose.yml            # Multi-container setup
  ├── config.yaml                   # Configuration file
  ├── setup.py                       # Package setup
- ├── requirements.txt               # Dependencies
+ └── requirements.txt               # Dependencies
 ```
