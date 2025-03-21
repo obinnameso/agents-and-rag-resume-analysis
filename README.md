@@ -2,7 +2,7 @@
 
 This project aims to test the use of a multi-agent architecture combined with a RAG framework to create an agentic workflow
 
-
+```
 📦 Resume-Analysis-LLM
  ├── 📂 backend                  # Backend API and processing logic
  │    ├── 📂 models              # LLM model, embedding, and retrieval logic
@@ -62,3 +62,4 @@ This project aims to test the use of a multi-agent architecture combined with a 
  ├── config.yaml                   # Configuration file
  ├── setup.py                       # Package setup
  ├── requirements.txt               # Dependencies
+```
