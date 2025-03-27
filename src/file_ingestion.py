@@ -1,36 +1,37 @@
 import os
-import fitz  # PyMuPDF
+import fitz  
+# import PyMuPDF
 import pdfplumber
-import pytesseract
-from pdf2image import convert_from_path
-from PIL import Image
+# import pytesseract
+# from pdf2image import convert_from_path
+# from PIL import Image
 from docx import Document
 
-def extract_text(file_path, ocr_enabled=True, tesseract_path=None):
-    """
-    Extracts text from a resume file (PDF, DOCX, or TXT).
+# def extract_text(file_path, ocr_enabled=True, tesseract_path=None):
+#     """
+#     Extracts text from a resume file (PDF, DOCX, or TXT).
     
-    Args:
-        file_path (str): Path to the resume file.
-        ocr_enabled (bool): Whether to use OCR for scanned PDFs.
-        tesseract_path (str): Optional path to Tesseract-OCR executable.
+#     Args:
+#         file_path (str): Path to the resume file.
+#         ocr_enabled (bool): Whether to use OCR for scanned PDFs.
+#         tesseract_path (str): Optional path to Tesseract-OCR executable.
 
-    Returns:
-        str: Extracted text content.
-    """
-    if tesseract_path:
-        pytesseract.pytesseract.tesseract_cmd = tesseract_path  # Set path for Tesseract
+#     Returns:
+#         str: Extracted text content.
+#     """
+#     if tesseract_path:
+#         pytesseract.pytesseract.tesseract_cmd = tesseract_path  # Set path for Tesseract
     
-    extension = file_path.split(".")[-1].lower()
+#     extension = file_path.split(".")[-1].lower()
 
-    if extension == "pdf":
-        return extract_text_from_pdf(file_path, ocr_enabled)
-    elif extension == "docx":
-        return extract_text_from_docx(file_path)
-    elif extension == "txt":
-        return extract_text_from_txt(file_path)
-    else:
-        raise ValueError(f"Unsupported file format: {extension}")
+#     if extension == "pdf":
+#         return extract_text_from_pdf(file_path, ocr_enabled)
+#     elif extension == "docx":
+#         return extract_text_from_docx(file_path)
+#     elif extension == "txt":
+#         return extract_text_from_txt(file_path)
+#     else:
+#         raise ValueError(f"Unsupported file format: {extension}")
 
 def extract_text_from_pdf(pdf_path, ocr_enabled):
     """
@@ -67,24 +68,24 @@ def extract_text_from_pdf(pdf_path, ocr_enabled):
 
     return text.strip()
 
-def extract_text_from_scanned_pdf(pdf_path):
-    """
-    Performs OCR on a scanned PDF to extract text.
+# def extract_text_from_scanned_pdf(pdf_path):
+#     """
+#     Performs OCR on a scanned PDF to extract text.
 
-    Args:
-        pdf_path (str): Path to the scanned PDF file.
+#     Args:
+#         pdf_path (str): Path to the scanned PDF file.
 
-    Returns:
-        str: Extracted text.
-    """
-    text = ""
-    try:
-        images = convert_from_path(pdf_path)
-        for img in images:
-            text += pytesseract.image_to_string(img) + "\n"
-    except Exception as e:
-        print(f"OCR extraction failed: {e}")
-    return text.strip()
+#     Returns:
+#         str: Extracted text.
+#     """
+#     text = ""
+#     try:
+#         images = convert_from_path(pdf_path)
+#         for img in images:
+#             text += pytesseract.image_to_string(img) + "\n"
+#     except Exception as e:
+#         print(f"OCR extraction failed: {e}")
+#     return text.strip()
 
 def extract_text_from_docx(docx_path):
     """
@@ -122,8 +123,8 @@ def extract_text_from_txt(txt_path):
 
 # Example Usage
 if __name__ == "__main__":
-    file_path = "sample_resume.pdf"  # Change to an actual file path
-    extracted_text = extract_text(file_path, ocr_enabled=True, tesseract_path="C:/Program Files/Tesseract-OCR/tesseract.exe")
+    file_path = "obinnaekesi-cv_ds_old.pdf"  # Change to an actual file path
+    extracted_text = extract_text_from_pdf(file_path, ocr_enabled=True)
     
     print("\n--- Extracted Resume Text ---\n")
     print(extracted_text[:1000])  # Print first 1000 characters for preview
