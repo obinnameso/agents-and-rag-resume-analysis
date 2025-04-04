@@ -121,6 +121,9 @@ def extract_text_from_txt(txt_path):
         print(f"Error processing TXT: {e}")
         return ""
 
+### trying to input the preprocessing stage together with the ingestion and also add a database to hold candidtae data using postgresql
+
+
 # Example Usage
 if __name__ == "__main__":
     file_path = "obinnaekesi-cv_ds_old.pdf"  # Change to an actual file path
