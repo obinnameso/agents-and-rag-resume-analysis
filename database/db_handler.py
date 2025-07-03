@@ -1,34 +1,45 @@
-def store_in_database(resume_data):
+import psycopg2
+
+# PostgreSQL configuration
+DB_CONFIG = {
+    "dbname": "resumes_db",
+    "user": "postgres",
+    "password": "",
+    "host": "localhost",
+    "port": 5432
+}
+
+def store_resume_to_postgres(data):
     """
-    Stores extracted resume information in an SQLite database.
-    
-    Args:
-        resume_data (dict): Extracted structured resume data.
+    Stores extracted resume data to PostgreSQL.
     """
-    connection = sqlite3.connect("resumes.db")
-    cursor = connection.cursor()
+    try:
+        conn = psycopg2.connect(**DB_CONFIG)
+        cursor = conn.cursor()
 
-    # Create table if not exists
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS resumes (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            job_title TEXT,
-            skills TEXT,
-            experience_years INTEGER,
-            education TEXT
-        )
-    """)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS resumes (
+                id SERIAL PRIMARY KEY,
+                job_title TEXT,
+                skills TEXT,
+                experience_years INTEGER,
+                education TEXT
+            );
+        """)
 
-    # Insert extracted data
-    cursor.execute("""
-        INSERT INTO resumes (job_title, skills, experience_years, education)
-        VALUES (?, ?, ?, ?)
-    """, (
-        resume_data["job_title"],
-        ", ".join(resume_data["skills"]),
-        resume_data["experience_years"],
-        resume_data["education"]
-    ))
+        cursor.execute("""
+            INSERT INTO resumes (job_title, skills, experience_years, education)
+            VALUES (%s, %s, %s, %s);
+        """, (
+            data["job_title"],
+            ", ".join(data["skills"]),
+            data["experience_years"],
+            data["education"]
+        ))
 
-    connection.commit()
-    connection.close()
+        conn.commit()
+        cursor.close()
+        conn.close()
+        print("✅ Resume info saved to PostgreSQL.")
+    except Exception as e:
+        print("❌ Failed to store to database:", e)
