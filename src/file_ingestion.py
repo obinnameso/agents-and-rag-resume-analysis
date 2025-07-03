@@ -37,10 +37,6 @@ def extract_text_from_pdf(pdf_path, ocr_enabled):
         except Exception as e:
             print(f"pdfplumber failed: {e}")
 
-    # If still no text, assume scanned PDF & apply OCR
-    if not text.strip() and ocr_enabled:
-        text = extract_text_from_scanned_pdf(pdf_path)
-
     return text.strip()
 
 def extract_text_from_docx(docx_path):
